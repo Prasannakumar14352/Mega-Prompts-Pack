@@ -3,11 +3,14 @@ import Reveal from "./Reveal";
 import Button from "./ui/Button";
 import Logo from "./Logo";
 import { GridOverlay, OrangeGlow } from "./ui/Decor";
-import LaunchCountdown from "./LaunchCountdown";
+import OfferCountdown from "./OfferCountdown";
+import { useOfferCountdown } from "../hooks/useOfferCountdown";
 import { scrollToId } from "../utils/scroll";
 import { LAUNCH_PRICE, PROMPT_COUNT } from "../config";
 
 export default function FinalCTA() {
+  const { isExpired } = useOfferCountdown();
+
   return (
     <section className="relative overflow-hidden bg-[#070707] py-16 sm:py-24">
       <GridOverlay className="opacity-25" />
@@ -28,17 +31,17 @@ export default function FinalCTA() {
             Get {PROMPT_COUNT} organized AI prompts, five premium bonus collections, lifetime
             access and free monthly updates.
           </p>
-          <p className="mt-6 text-xl font-semibold text-white">
-            Launch access: <span className="text-[#FF6A00]">{LAUNCH_PRICE}</span> one time
-          </p>
-
-          <div className="mt-7 flex justify-center">
-            <LaunchCountdown
-              className="scale-90 sm:scale-100"
-              expiredFallback={
-                <p className="text-sm font-semibold text-[#B8B8C0]">Launch offer has ended</p>
-              }
-            />
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-xl font-semibold text-white">
+            {isExpired ? (
+              <span>The limited launch period has ended.</span>
+            ) : (
+              <>
+                <span>
+                  Your <span className="text-[#FF6A00]">{LAUNCH_PRICE}</span> launch price ends in
+                </span>
+                <OfferCountdown variant="inline" />
+              </>
+            )}
           </div>
 
           <Button onClick={() => scrollToId("pricing")} fullWidthOnMobile className="mt-7">

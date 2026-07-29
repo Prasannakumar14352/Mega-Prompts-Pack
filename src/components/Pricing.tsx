@@ -2,15 +2,15 @@ import { ArrowRight, ShieldCheck } from "lucide-react";
 import Reveal from "./Reveal";
 import Badge from "./ui/Badge";
 import Button from "./ui/Button";
-import LaunchCountdown from "./LaunchCountdown";
+import OfferCountdown from "./OfferCountdown";
 import { OrangeGlow } from "./ui/Decor";
-import { useCountdown } from "../hooks/useCountdown";
+import { useOfferCountdown } from "../hooks/useOfferCountdown";
 import {
-  BUY_LINK,
-  GUARANTEE_DAYS,
-  LAUNCH_OFFER_END,
+  EXPIRED_PRICE,
+  LAUNCH_BUY_LINK,
   LAUNCH_PRICE,
   PROMPT_COUNT,
+  REGULAR_BUY_LINK,
   TOTAL_VALUE,
   isBuyLinkConfigured,
 } from "../config";
@@ -33,18 +33,25 @@ const INCLUDED_CHIPS = [
 ];
 
 export default function Pricing() {
-  const { expired, invalid } = useCountdown(LAUNCH_OFFER_END);
-  const offerActive = !expired && !invalid;
+  const { isExpired } = useOfferCountdown();
+
+  const displayedPrice = isExpired ? EXPIRED_PRICE : LAUNCH_PRICE;
+  const activeBuyLink = isExpired ? REGULAR_BUY_LINK : LAUNCH_BUY_LINK;
+  const regularLinkReady = isBuyLinkConfigured(REGULAR_BUY_LINK);
+  const purchaseBlocked = isExpired && !regularLinkReady;
+  const buttonLabel = isExpired ? `Get Access for ${EXPIRED_PRICE}` : "Get Instant Access";
 
   const handlePurchase = () => {
-    if (!isBuyLinkConfigured()) {
+    if (purchaseBlocked) return;
+
+    if (!isBuyLinkConfigured(activeBuyLink)) {
       // eslint-disable-next-line no-console
       console.warn(
-        "PRODXSTORE: BUY_LINK is still set to its placeholder value. Update BUY_LINK in src/config.ts with your live checkout URL before publishing."
+        "PRODXSTORE: The active Razorpay link is still a placeholder. Update LAUNCH_BUY_LINK / REGULAR_BUY_LINK in src/config.ts with your live checkout URLs before publishing."
       );
       return;
     }
-    window.location.href = BUY_LINK;
+    window.location.href = activeBuyLink;
   };
 
   return (
@@ -80,46 +87,59 @@ export default function Pricing() {
               <p className="text-sm text-[#B8B8C0]">Total value</p>
               <p className="text-xl font-semibold text-[#85858E] line-through">{TOTAL_VALUE}</p>
 
-              <p className="mt-4 text-sm font-medium text-[#FF6A00]">Launch price</p>
+              <p className="mt-4 text-sm font-medium text-[#FF6A00]">
+                {isExpired ? "Regular price" : "Launch price"}
+              </p>
               <p className="mt-1 font-heading text-6xl font-extrabold text-[#FF6A00]">
-                {LAUNCH_PRICE}
+                {displayedPrice}
               </p>
               <p className="mt-2 text-sm text-[#B8B8C0]">One-time payment. No subscription.</p>
             </div>
 
             <div className="mt-8 text-center">
-              {offerActive && (
+              {!isExpired && (
                 <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#85858E]">
-                  Lock in the {LAUNCH_PRICE} launch price before the timer ends
+                  Your {LAUNCH_PRICE} launch offer expires in
                 </p>
               )}
-              <LaunchCountdown
+              <OfferCountdown
                 className="justify-center"
                 expiredFallback={
                   <p className="text-sm font-semibold text-[#B8B8C0]">
-                    The launch period has ended. Check the current price below.
+                    Your 20-minute launch offer has ended.
                   </p>
                 }
               />
             </div>
 
-            <Button
-              onClick={handlePurchase}
-              aria-label="Get instant access — proceed to secure checkout"
-              className="mt-6 w-full"
-            >
-              Get Instant Access
-              <ArrowRight size={18} aria-hidden="true" />
-            </Button>
+            {purchaseBlocked ? (
+              <>
+                <Button disabled aria-disabled="true" className="mt-6 w-full">
+                  {buttonLabel}
+                </Button>
+                <p className="mt-3 text-center text-xs text-[#F59E0B]">
+                  Regular-price checkout is being updated. Contact support for access.
+                </p>
+              </>
+            ) : (
+              <Button
+                onClick={handlePurchase}
+                aria-label={`${buttonLabel} — proceed to secure checkout`}
+                className="mt-6 w-full"
+              >
+                {buttonLabel}
+                <ArrowRight size={18} aria-hidden="true" />
+              </Button>
+            )}
 
             <p className="mt-3 text-center text-xs text-[#85858E]">
-              Instant download • Secure payment • {GUARANTEE_DAYS}-day money-back guarantee
+              Instant download • Secure payment • 7-day money-back guarantee
             </p>
 
-            {offerActive && (
+            {!isExpired && (
               <p className="mt-4 text-center text-xs text-[#85858E]">
-                The {LAUNCH_PRICE} price is a limited launch offer and may increase after the
-                promotional period.
+                Your {LAUNCH_PRICE} price is a limited launch offer and may increase after your
+                20-minute session timer ends.
               </p>
             )}
 

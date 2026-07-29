@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { scrollToId } from "../utils/scroll";
 import Button from "./ui/Button";
-import { LAUNCH_PRICE, PREVIOUS_PRICE } from "../config";
+import { useOfferCountdown } from "../hooks/useOfferCountdown";
+import { EXPIRED_PRICE, LAUNCH_PRICE } from "../config";
 
 export default function StickyMobileCTA() {
   const [pricingVisible, setPricingVisible] = useState(false);
   const [footerVisible, setFooterVisible] = useState(false);
   const hidden = pricingVisible || footerVisible;
+  const { isExpired, formattedTime } = useOfferCountdown();
 
   useEffect(() => {
     const pricingEl = document.getElementById("pricing");
@@ -38,14 +40,18 @@ export default function StickyMobileCTA() {
       }`}
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
-      <div className="flex items-center justify-between gap-4 px-4 py-3">
-        <div className="flex items-baseline gap-2">
-          <span className="text-lg font-bold text-[#FF6A00]">{LAUNCH_PRICE}</span>
-          <span className="text-sm text-[#85858E] line-through">{PREVIOUS_PRICE}</span>
+      <div className="flex items-center justify-between gap-3 px-4 py-3">
+        <div className="min-w-0">
+          <span className="block text-lg font-bold text-[#FF6A00]">
+            {isExpired ? EXPIRED_PRICE : LAUNCH_PRICE}
+          </span>
+          <span className="block truncate text-[11px] font-medium text-[#85858E]">
+            {isExpired ? "Offer ended" : `${formattedTime} remaining`}
+          </span>
         </div>
         <Button
           onClick={() => scrollToId("pricing")}
-          className="!px-6 !py-3"
+          className="!px-6 !py-3 shrink-0"
           aria-label="Scroll to pricing to get access"
         >
           Get Access

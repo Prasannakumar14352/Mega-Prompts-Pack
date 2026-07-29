@@ -1,12 +1,11 @@
 import { ArrowRight, FileSpreadsheet, ShieldCheck } from "lucide-react";
-import { PROMPT_COUNT } from "../config";
+import { LAUNCH_PRICE, PROMPT_COUNT } from "../config";
 import { scrollToId } from "../utils/scroll";
 import Badge from "./ui/Badge";
 import Button from "./ui/Button";
 import { GridOverlay, OrangeGlow } from "./ui/Decor";
-import LaunchCountdown from "./LaunchCountdown";
-import { useCountdown } from "../hooks/useCountdown";
-import { LAUNCH_OFFER_END } from "../config";
+import OfferCountdown from "./OfferCountdown";
+import { useOfferCountdown } from "../hooks/useOfferCountdown";
 
 const FILE_CARDS = [
   { name: "ChatGPT.csv", count: "312,480 prompts", rotate: "-rotate-6", offset: "translate-y-2" },
@@ -18,8 +17,7 @@ const FILE_CARDS = [
 ];
 
 export default function Hero() {
-  const { expired, invalid } = useCountdown(LAUNCH_OFFER_END);
-  const offerActive = !expired && !invalid;
+  const { isExpired } = useOfferCountdown();
 
   return (
     <section className="relative overflow-hidden bg-[#070707]">
@@ -65,16 +63,25 @@ export default function Hero() {
           </div>
 
           <div className="mt-6">
-            {offerActive && (
+            {!isExpired && (
               <p className="mb-2.5 text-xs font-semibold uppercase tracking-widest text-[#85858E]">
-                Launch pricing ends in
+                Your special launch price expires in
               </p>
             )}
-            <LaunchCountdown
+            <OfferCountdown
+              showIcon
               expiredFallback={
-                <p className="text-sm font-semibold text-[#B8B8C0]">Launch offer has ended</p>
+                <p className="text-sm font-semibold text-[#B8B8C0]">
+                  Your launch offer has ended.
+                </p>
               }
             />
+            {!isExpired && (
+              <p className="mt-2.5 text-xs text-[#85858E]">
+                Complete your purchase before the timer reaches zero to access the {LAUNCH_PRICE}{" "}
+                launch price.
+              </p>
+            )}
           </div>
 
           {/* Add verified customer count and rating here only after genuine purchase and review data is available. */}

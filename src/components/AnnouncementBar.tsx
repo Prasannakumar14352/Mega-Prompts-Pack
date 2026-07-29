@@ -1,10 +1,9 @@
-import { useCountdown } from "../hooks/useCountdown";
-import LaunchCountdown from "./LaunchCountdown";
-import { LAUNCH_OFFER_END, LAUNCH_PRICE, PREVIOUS_PRICE } from "../config";
+import { useOfferCountdown } from "../hooks/useOfferCountdown";
+import OfferCountdown from "./OfferCountdown";
+import { LAUNCH_PRICE, PREVIOUS_PRICE } from "../config";
 
 export default function AnnouncementBar() {
-  const { expired, invalid } = useCountdown(LAUNCH_OFFER_END);
-  const showCountdown = !expired && !invalid;
+  const { isExpired } = useOfferCountdown();
 
   return (
     <div className="bg-[#FF6A00] text-[#090909] text-xs sm:text-sm">
@@ -13,13 +12,13 @@ export default function AnnouncementBar() {
           Limited launch price
         </span>
 
-        {showCountdown ? (
-          <span className="flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1 font-medium">
-            <span>Launch offer ends in</span>
-            <LaunchCountdown variant="inline" className="text-[#090909]" />
-          </span>
+        {isExpired ? (
+          <span className="font-medium">Your launch offer has ended</span>
         ) : (
-          <span className="font-medium">Launch offer has ended</span>
+          <span className="flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1 font-medium">
+            <span>Your {LAUNCH_PRICE} offer ends in</span>
+            <OfferCountdown variant="inline" />
+          </span>
         )}
 
         <span className="font-medium">
