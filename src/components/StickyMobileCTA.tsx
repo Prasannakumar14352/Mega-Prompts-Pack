@@ -1,0 +1,56 @@
+import { useEffect, useState } from "react";
+import { scrollToId } from "../utils/scroll";
+import Button from "./ui/Button";
+import { LAUNCH_PRICE, PREVIOUS_PRICE } from "../config";
+
+export default function StickyMobileCTA() {
+  const [pricingVisible, setPricingVisible] = useState(false);
+  const [footerVisible, setFooterVisible] = useState(false);
+  const hidden = pricingVisible || footerVisible;
+
+  useEffect(() => {
+    const pricingEl = document.getElementById("pricing");
+    const footerEl = document.getElementById("site-footer");
+    if (!pricingEl && !footerEl) return;
+
+    const pricingObserver = new IntersectionObserver(
+      ([entry]) => setPricingVisible(entry.intersectionRatio > 0.4),
+      { threshold: [0, 0.4, 1] }
+    );
+    const footerObserver = new IntersectionObserver(
+      ([entry]) => setFooterVisible(entry.isIntersecting),
+      { threshold: 0.05 }
+    );
+
+    if (pricingEl) pricingObserver.observe(pricingEl);
+    if (footerEl) footerObserver.observe(footerEl);
+
+    return () => {
+      pricingObserver.disconnect();
+      footerObserver.disconnect();
+    };
+  }, []);
+
+  return (
+    <div
+      className={`md:hidden fixed inset-x-0 bottom-0 z-40 border-t border-[#2A2A2E] bg-[rgba(7,7,7,0.96)] backdrop-blur shadow-[0_-4px_20px_rgba(0,0,0,0.5)] transition-transform duration-300 ${
+        hidden ? "translate-y-full" : "translate-y-0"
+      }`}
+      style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+    >
+      <div className="flex items-center justify-between gap-4 px-4 py-3">
+        <div className="flex items-baseline gap-2">
+          <span className="text-lg font-bold text-[#FF6A00]">{LAUNCH_PRICE}</span>
+          <span className="text-sm text-[#85858E] line-through">{PREVIOUS_PRICE}</span>
+        </div>
+        <Button
+          onClick={() => scrollToId("pricing")}
+          className="!px-6 !py-3"
+          aria-label="Scroll to pricing to get access"
+        >
+          Get Access
+        </Button>
+      </div>
+    </div>
+  );
+}
