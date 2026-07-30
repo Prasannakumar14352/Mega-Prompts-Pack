@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { OFFER_DURATION_MINUTES, OFFER_STORAGE_KEY } from "../config";
+import { OFFER_DURATION_MS, OFFER_STORAGE_KEY } from "../config";
 
 export interface OfferCountdownState {
+  hours: number;
   minutes: number;
   seconds: number;
   totalMilliseconds: number;
@@ -9,16 +10,18 @@ export interface OfferCountdownState {
   formattedTime: string;
 }
 
-const DURATION_MS = OFFER_DURATION_MINUTES * 60 * 1000;
+function pad(value: number): string {
+  return value.toString().padStart(2, "0");
+}
 
 /**
- * Reads this visitor's stored offer-expiry timestamp, or creates one (now + 20
- * minutes) on their first visit. Safe to call during SSR/before `window`
+ * Reads this visitor's stored offer-expiry timestamp, or creates one (now + 2
+ * hours) on their first visit. Safe to call during SSR/before `window`
  * exists — falls back to an in-memory expiry that isn't persisted.
  */
 function readOrCreateExpiry(): number {
   if (typeof window === "undefined") {
-    return Date.now() + DURATION_MS;
+    return Date.now() + OFFER_DURATION_MS;
   }
 
   try {
@@ -34,12 +37,12 @@ function readOrCreateExpiry(): number {
   } catch {
     // localStorage unavailable (private browsing, blocked storage, etc.) —
     // fall through and use an in-memory expiry for this render only.
-    return Date.now() + DURATION_MS;
+    return Date.now() + OFFER_DURATION_MS;
   }
 
   // No stored timestamp at all — this is a new visitor/browser, so start a
-  // fresh 20-minute offer.
-  const fresh = Date.now() + DURATION_MS;
+  // fresh 2-hour offer.
+  const fresh = Date.now() + OFFER_DURATION_MS;
   try {
     window.localStorage.setItem(OFFER_STORAGE_KEY, String(fresh));
   } catch {
@@ -50,20 +53,22 @@ function readOrCreateExpiry(): number {
 
 function computeState(expiryMs: number): OfferCountdownState {
   const totalMilliseconds = Math.max(0, expiryMs - Date.now());
-  const minutes = Math.floor(totalMilliseconds / 60000);
-  const seconds = Math.floor((totalMilliseconds % 60000) / 1000);
+  const hours = Math.floor(totalMilliseconds / 3_600_000);
+  const minutes = Math.floor((totalMilliseconds % 3_600_000) / 60_000);
+  const seconds = Math.floor((totalMilliseconds % 60_000) / 1_000);
 
   return {
+    hours,
     minutes,
     seconds,
     totalMilliseconds,
     isExpired: totalMilliseconds <= 0,
-    formattedTime: `${minutes}:${seconds.toString().padStart(2, "0")}`,
+    formattedTime: `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`,
   };
 }
 
 /**
- * A 20-minute launch-offer countdown scoped to this visitor's browser. The
+ * A 2-hour launch-offer countdown scoped to this visitor's browser. The
  * expiry is created on first visit and persisted in localStorage, so
  * refreshing the page or reopening the tab continues the same countdown
  * instead of resetting it. Every component calling this hook reads the same
@@ -87,14 +92,14 @@ export function useOfferCountdown(): OfferCountdownState {
   return state;
 }
 
+// To test a new visitor session locally, remove the prodxstore_launch_offer_expiry localStorage entry.
 /**
  * Development-only helper: clears this visitor's stored offer expiry and
- * reloads the page so a fresh 20-minute countdown starts. Developers can also
- * clear it manually via devtools: localStorage.removeItem("prodxstore_offer_expiry").
- * Never wire this to a visible button or expose it to real visitors.
+ * reloads the page so a fresh 2-hour countdown starts. Never wire this to a
+ * visible button or expose it to real visitors.
  */
 export function resetOfferTimerForTesting(): void {
-  if (typeof window !== "undefined") {
+  if (typeof window !== "undefined" && import.meta.env.DEV) {
     window.localStorage.removeItem(OFFER_STORAGE_KEY);
     window.location.reload();
   }

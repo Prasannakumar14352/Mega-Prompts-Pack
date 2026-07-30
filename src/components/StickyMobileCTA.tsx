@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { scrollToId } from "../utils/scroll";
 import Button from "./ui/Button";
 import { useOfferCountdown } from "../hooks/useOfferCountdown";
-import { EXPIRED_PRICE, LAUNCH_PRICE } from "../config";
+import { LAUNCH_PRICE, REGULAR_PRICE } from "../config";
 
 export default function StickyMobileCTA() {
   const [pricingVisible, setPricingVisible] = useState(false);
@@ -43,10 +43,10 @@ export default function StickyMobileCTA() {
       <div className="flex items-center justify-between gap-3 px-4 py-3">
         <div className="min-w-0">
           <span className="block text-lg font-bold text-[#FF6A00]">
-            {isExpired ? EXPIRED_PRICE : LAUNCH_PRICE}
+            {isExpired ? REGULAR_PRICE : LAUNCH_PRICE}
           </span>
           <span className="block truncate text-[11px] font-medium text-[#85858E]">
-            {isExpired ? "Offer ended" : `${formattedTime} remaining`}
+            {isExpired ? "Regular access" : `${formattedTime} remaining`}
           </span>
         </div>
         <Button

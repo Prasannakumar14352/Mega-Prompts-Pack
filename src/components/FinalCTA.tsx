@@ -3,10 +3,9 @@ import Reveal from "./Reveal";
 import Button from "./ui/Button";
 import Logo from "./Logo";
 import { GridOverlay, OrangeGlow } from "./ui/Decor";
-import OfferCountdown from "./OfferCountdown";
 import { useOfferCountdown } from "../hooks/useOfferCountdown";
 import { scrollToId } from "../utils/scroll";
-import { LAUNCH_PRICE, PROMPT_COUNT } from "../config";
+import { LAUNCH_PRICE, PROMPT_COUNT, REGULAR_PRICE } from "../config";
 
 export default function FinalCTA() {
   const { isExpired } = useOfferCountdown();
@@ -31,21 +30,20 @@ export default function FinalCTA() {
             Get {PROMPT_COUNT} organized AI prompts, five premium bonus collections, lifetime
             access and free monthly updates.
           </p>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-xl font-semibold text-white">
+
+          <p className="mt-6 text-xl font-semibold text-white">
             {isExpired ? (
-              <span>The limited launch period has ended.</span>
+              <>Get complete lifetime access for {REGULAR_PRICE}.</>
             ) : (
               <>
-                <span>
-                  Your <span className="text-[#FF6A00]">{LAUNCH_PRICE}</span> launch price ends in
-                </span>
-                <OfferCountdown variant="inline" />
+                Get lifetime access for <span className="text-[#FF6A00]">{LAUNCH_PRICE}</span>{" "}
+                before your offer ends.
               </>
             )}
-          </div>
+          </p>
 
           <Button onClick={() => scrollToId("pricing")} fullWidthOnMobile className="mt-7">
-            Get Instant Access
+            {isExpired ? "View Regular Access" : "View Launch Offer"}
             <ArrowRight size={18} aria-hidden="true" />
           </Button>
 

@@ -6,13 +6,14 @@ import OfferCountdown from "./OfferCountdown";
 import { OrangeGlow } from "./ui/Decor";
 import { useOfferCountdown } from "../hooks/useOfferCountdown";
 import {
-  EXPIRED_PRICE,
   LAUNCH_BUY_LINK,
   LAUNCH_PRICE,
   PROMPT_COUNT,
   REGULAR_BUY_LINK,
+  REGULAR_PRICE,
+  SUPPORT_EMAIL,
   TOTAL_VALUE,
-  isBuyLinkConfigured,
+  isValidCheckoutLink,
 } from "../config";
 
 const VALUE_ITEMS = [
@@ -35,22 +36,13 @@ const INCLUDED_CHIPS = [
 export default function Pricing() {
   const { isExpired } = useOfferCountdown();
 
-  const displayedPrice = isExpired ? EXPIRED_PRICE : LAUNCH_PRICE;
+  const activePrice = isExpired ? REGULAR_PRICE : LAUNCH_PRICE;
   const activeBuyLink = isExpired ? REGULAR_BUY_LINK : LAUNCH_BUY_LINK;
-  const regularLinkReady = isBuyLinkConfigured(REGULAR_BUY_LINK);
-  const purchaseBlocked = isExpired && !regularLinkReady;
-  const buttonLabel = isExpired ? `Get Access for ${EXPIRED_PRICE}` : "Get Instant Access";
+  const activeButtonText = isExpired ? `Get Access for ${REGULAR_PRICE}` : `Get Instant Access for ${LAUNCH_PRICE}`;
+  const linkReady = isValidCheckoutLink(activeBuyLink);
 
   const handlePurchase = () => {
-    if (purchaseBlocked) return;
-
-    if (!isBuyLinkConfigured(activeBuyLink)) {
-      // eslint-disable-next-line no-console
-      console.warn(
-        "PRODXSTORE: The active Razorpay link is still a placeholder. Update LAUNCH_BUY_LINK / REGULAR_BUY_LINK in src/config.ts with your live checkout URLs before publishing."
-      );
-      return;
-    }
+    if (!linkReady) return;
     window.location.href = activeBuyLink;
   };
 
@@ -62,7 +54,7 @@ export default function Pricing() {
         <Reveal className="mx-auto max-w-xl rounded-3xl bg-[linear-gradient(135deg,#FF6A00_0%,#FF7A1A_50%,#D94F00_100%)] p-[1.5px] shadow-[0_30px_90px_rgba(255,106,0,0.22)]">
           <div className="rounded-3xl bg-[#070707] p-6 sm:p-10">
             <div className="flex justify-center">
-              <Badge>Limited Launch Offer</Badge>
+              <Badge>{isExpired ? "Regular Access" : "2-Hour Launch Offer"}</Badge>
             </div>
 
             <h2 className="mt-5 text-center font-heading text-2xl sm:text-3xl font-bold text-white">
@@ -91,57 +83,68 @@ export default function Pricing() {
                 {isExpired ? "Regular price" : "Launch price"}
               </p>
               <p className="mt-1 font-heading text-6xl font-extrabold text-[#FF6A00]">
-                {displayedPrice}
+                {activePrice}
               </p>
               <p className="mt-2 text-sm text-[#B8B8C0]">One-time payment. No subscription.</p>
             </div>
 
             <div className="mt-8 text-center">
-              {!isExpired && (
-                <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#85858E]">
-                  Your {LAUNCH_PRICE} launch offer expires in
-                </p>
-              )}
-              <OfferCountdown
-                className="justify-center"
-                expiredFallback={
+              {isExpired ? (
+                <>
                   <p className="text-sm font-semibold text-[#B8B8C0]">
-                    Your 20-minute launch offer has ended.
+                    Your 2-hour launch offer has ended.
                   </p>
-                }
-              />
+                  <p className="mt-2 text-xs text-[#85858E]">
+                    You can still purchase the complete Mega AI Prompt Vault with lifetime access.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#85858E]">
+                    Your {LAUNCH_PRICE} launch offer ends in
+                  </p>
+                  <OfferCountdown className="justify-center" />
+                  <p className="mt-3 text-xs text-[#85858E]">
+                    Complete your purchase before the countdown reaches zero to lock in the launch
+                    price.
+                  </p>
+                </>
+              )}
             </div>
 
-            {purchaseBlocked ? (
-              <>
-                <Button disabled aria-disabled="true" className="mt-6 w-full">
-                  {buttonLabel}
-                </Button>
-                <p className="mt-3 text-center text-xs text-[#F59E0B]">
-                  Regular-price checkout is being updated. Contact support for access.
-                </p>
-              </>
-            ) : (
+            {linkReady ? (
               <Button
                 onClick={handlePurchase}
-                aria-label={`${buttonLabel} — proceed to secure checkout`}
+                aria-label={`${activeButtonText} — proceed to secure checkout`}
                 className="mt-6 w-full"
               >
-                {buttonLabel}
+                {activeButtonText}
                 <ArrowRight size={18} aria-hidden="true" />
               </Button>
+            ) : (
+              <>
+                <Button disabled aria-disabled="true" className="mt-6 w-full">
+                  {activeButtonText}
+                </Button>
+                <p className="mt-3 text-center text-xs text-[#F59E0B]">
+                  Regular-price checkout is temporarily unavailable.
+                </p>
+                <p className="mt-1 text-center text-xs text-[#85858E]">
+                  Email{" "}
+                  <a
+                    href={`mailto:${SUPPORT_EMAIL}`}
+                    className="font-medium text-[#FF6A00] hover:underline"
+                  >
+                    {SUPPORT_EMAIL}
+                  </a>{" "}
+                  for access.
+                </p>
+              </>
             )}
 
             <p className="mt-3 text-center text-xs text-[#85858E]">
               Instant download • Secure payment • 7-day money-back guarantee
             </p>
-
-            {!isExpired && (
-              <p className="mt-4 text-center text-xs text-[#85858E]">
-                Your {LAUNCH_PRICE} price is a limited launch offer and may increase after your
-                20-minute session timer ends.
-              </p>
-            )}
 
             <div className="mt-6 flex flex-wrap justify-center gap-2">
               {INCLUDED_CHIPS.map((chip) => (

@@ -1,5 +1,5 @@
 import { ArrowRight, FileSpreadsheet, ShieldCheck } from "lucide-react";
-import { LAUNCH_PRICE, PROMPT_COUNT } from "../config";
+import { LAUNCH_PRICE, PREVIOUS_PRICE, PROMPT_COUNT } from "../config";
 import { scrollToId } from "../utils/scroll";
 import Badge from "./ui/Badge";
 import Button from "./ui/Button";
@@ -63,24 +63,17 @@ export default function Hero() {
           </div>
 
           <div className="mt-6">
-            {!isExpired && (
-              <p className="mb-2.5 text-xs font-semibold uppercase tracking-widest text-[#85858E]">
-                Your special launch price expires in
+            {isExpired ? (
+              <p className="text-sm font-semibold text-[#B8B8C0]">
+                The launch offer has ended. Get lifetime access for {PREVIOUS_PRICE}.
               </p>
-            )}
-            <OfferCountdown
-              showIcon
-              expiredFallback={
-                <p className="text-sm font-semibold text-[#B8B8C0]">
-                  Your launch offer has ended.
+            ) : (
+              <>
+                <p className="mb-2.5 text-xs font-semibold uppercase tracking-widest text-[#85858E]">
+                  Your {LAUNCH_PRICE} launch price ends in
                 </p>
-              }
-            />
-            {!isExpired && (
-              <p className="mt-2.5 text-xs text-[#85858E]">
-                Complete your purchase before the timer reaches zero to access the {LAUNCH_PRICE}{" "}
-                launch price.
-              </p>
+                <OfferCountdown showIcon />
+              </>
             )}
           </div>
 

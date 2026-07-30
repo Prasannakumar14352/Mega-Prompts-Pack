@@ -6,12 +6,10 @@
 // Replace this value with the live Razorpay Payment Page, Gumroad or checkout URL before publishing.
 export const BUY_LINK: string = "https://rzp.io/rzp/Kx9tgGJ";
 
-export const LAUNCH_PRICE = "₹499";
+export const LAUNCH_PRICE = "₹399";
 export const PREVIOUS_PRICE = "₹1,999";
-// Regular (pre-launch) price — same value as PREVIOUS_PRICE, kept as one source of truth.
+// Regular (post-launch) price — same value as PREVIOUS_PRICE, kept as one source of truth.
 export const REGULAR_PRICE = PREVIOUS_PRICE;
-// Price shown once a visitor's 20-minute session offer has expired — same value as PREVIOUS_PRICE.
-export const EXPIRED_PRICE = PREVIOUS_PRICE;
 export const TOTAL_VALUE = "₹4,499";
 export const SUPPORT_EMAIL = "Prodxstoresupport@gmail.com";
 export const PRODUCT_NAME = "The Mega AI Prompt Vault";
@@ -21,16 +19,16 @@ export const GUARANTEE_DAYS = 7;
 // ------------------------------------------------------------
 // Visitor-session launch-offer timer
 // ------------------------------------------------------------
-// Each visitor gets their own 20-minute countdown starting the first time they
+// Each visitor gets their own 2-hour countdown starting the first time they
 // open this website in their browser. It is stored in localStorage so it
 // survives refreshes and reopened tabs, but it is specific to that visitor —
 // it is not a single global deadline shared by every visitor.
-export const OFFER_DURATION_MINUTES = 20;
-export const OFFER_STORAGE_KEY = "prodxstore_offer_expiry";
+export const OFFER_DURATION_MS = 2 * 60 * 60 * 1000;
+export const OFFER_STORAGE_KEY = "prodxstore_launch_offer_expiry";
 
-// The launch and regular Razorpay links must be configured with matching payment amounts before publishing.
+// Each Razorpay link must be configured with the same amount displayed on the landing page.
 export const LAUNCH_BUY_LINK: string = BUY_LINK;
-export const REGULAR_BUY_LINK: string = "YOUR_RAZORPAY_₹1999_LINK";
+export const REGULAR_BUY_LINK: string = "PASTE_YOUR_1999_RAZORPAY_PAYMENT_LINK_HERE";
 
 // Replace # with published legal-policy URLs before running paid advertisements.
 export const TERMS_LINK = "#";
@@ -40,13 +38,15 @@ export const CONTACT_LINK = "mailto:support@prodxstore.com";
 
 export const BRAND_NAME = "PRODXSTORE";
 
-const UNCONFIGURED_LINK_VALUES = new Set([
-  "YOUR_RAZORPAY_OR_GUMROAD_LINK",
-  "CURRENT_RAZORPAY_₹399_LINK",
-  "YOUR_RAZORPAY_₹1999_LINK",
-  "",
-]);
+/** Rejects placeholder values and anything that isn't a real http(s) URL. */
+export function isValidCheckoutLink(link: string): boolean {
+  const value = link.trim();
 
-export function isBuyLinkConfigured(link: string = BUY_LINK): boolean {
-  return !UNCONFIGURED_LINK_VALUES.has(link.trim());
+  return (
+    value.length > 0 &&
+    value !== "#" &&
+    !value.includes("PASTE_YOUR") &&
+    !value.includes("YOUR_RAZORPAY") &&
+    /^https?:\/\//i.test(value)
+  );
 }
