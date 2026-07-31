@@ -6,15 +6,15 @@ import OfferCountdown from "./OfferCountdown";
 import { OrangeGlow } from "./ui/Decor";
 import { useOfferCountdown } from "../hooks/useOfferCountdown";
 import {
-  LAUNCH_PAYMENT_PAGE_URL,
+  LAUNCH_SUPERPROFILE_URL,
   LAUNCH_PRICE,
-  PAYMENT_PAGE_REDIRECT_CONFIGURED,
+  SUPERPROFILE_EMAIL_DELIVERY_CONFIGURED,
   PROMPT_COUNT,
-  REGULAR_PAYMENT_PAGE_URL,
+  REGULAR_SUPERPROFILE_URL,
   REGULAR_PRICE,
   SUPPORT_EMAIL,
   TOTAL_VALUE,
-  isValidPaymentPageUrl,
+  isValidSuperProfileUrl,
 } from "../config";
 
 const VALUE_ITEMS = [
@@ -38,9 +38,9 @@ export default function Pricing() {
   const { isExpired } = useOfferCountdown();
 
   const activePrice = isExpired ? REGULAR_PRICE : LAUNCH_PRICE;
-  const activePaymentPageUrl = isExpired ? REGULAR_PAYMENT_PAGE_URL : LAUNCH_PAYMENT_PAGE_URL;
+  const activeCheckoutUrl = isExpired ? REGULAR_SUPERPROFILE_URL : LAUNCH_SUPERPROFILE_URL;
   const activeButtonText = isExpired ? `Get Access for ${REGULAR_PRICE}` : `Get Instant Access for ${LAUNCH_PRICE}`;
-  const linkReady = isValidPaymentPageUrl(activePaymentPageUrl);
+  const linkReady = isValidSuperProfileUrl(activeCheckoutUrl);
 
   return (
     <section id="pricing" className="relative overflow-hidden py-16 sm:py-24 bg-[#0D0D0F]">
@@ -110,7 +110,7 @@ export default function Pricing() {
             </div>
 
             <LinkButton
-              href={activePaymentPageUrl}
+              href={activeCheckoutUrl}
               disabled={!linkReady}
               aria-label={`Purchase The Mega AI Prompt Vault for ${activePrice}`}
               className="mt-6 w-full"
@@ -121,7 +121,7 @@ export default function Pricing() {
 
             {!linkReady && (
               <p className="mt-3 text-center text-xs text-[#F59E0B]">
-                Checkout is temporarily unavailable. Please contact{" "}
+                Checkout is temporarily unavailable. Contact{" "}
                 <a
                   href={`mailto:${SUPPORT_EMAIL}`}
                   className="font-medium text-[#FF6A00] hover:underline"
@@ -133,13 +133,15 @@ export default function Pricing() {
             )}
 
             <p className="mt-3 text-center text-xs text-[#85858E]">
-              Instant download • Secure payment • 7-day money-back guarantee
+              {SUPERPROFILE_EMAIL_DELIVERY_CONFIGURED
+                ? "Secure checkout • Instant digital delivery • Product access by email"
+                : "Secure checkout • Instant digital delivery"}
             </p>
 
             <p className="mt-2 text-center text-xs text-[#85858E]">
-              {PAYMENT_PAGE_REDIRECT_CONFIGURED
-                ? "After successful payment, you will be redirected to the product access page and receive your access details by email."
-                : "Payment is completed securely on Razorpay. Product access instructions will be shown after payment."}
+              {SUPERPROFILE_EMAIL_DELIVERY_CONFIGURED
+                ? "After successful payment through SuperProfile, your product access or download instructions will be displayed and sent to the email address used during checkout."
+                : "After successful payment through SuperProfile, your product access or download instructions will be displayed on the confirmation page."}
             </p>
 
             <div className="mt-6 flex flex-wrap justify-center gap-2">

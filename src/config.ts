@@ -3,9 +3,9 @@
 // Update these values before publishing the page live.
 // ============================================================
 
-// These must be published Razorpay Payment Page URLs configured with the matching displayed prices.
-export const LAUNCH_PAYMENT_PAGE_URL: string = "https://rzp.io/rzp/Kx9tgGJ";
-export const REGULAR_PAYMENT_PAGE_URL: string = "PASTE_1999_RAZORPAY_PAYMENT_PAGE_URL_HERE";
+// Each SuperProfile product URL must use the same price displayed on this landing page.
+export const LAUNCH_SUPERPROFILE_URL: string = "https://superprofile.bio/vp/the-mega-ai-prompt-vault-—-launch-offer";
+export const REGULAR_SUPERPROFILE_URL: string = "PASTE_1999_SUPERPROFILE_PRODUCT_URL_HERE";
 
 export const LAUNCH_PRICE = "₹399";
 export const PREVIOUS_PRICE = "₹1,999";
@@ -17,9 +17,9 @@ export const PRODUCT_NAME = "The Mega AI Prompt Vault";
 export const PROMPT_COUNT = "1,287,840+";
 export const GUARANTEE_DAYS = 7;
 
-// Set this to true only once the Razorpay Payment Page above has been configured
-// to redirect to a working thank-you / product-access page after payment.
-export const PAYMENT_PAGE_REDIRECT_CONFIGURED = true;
+// Set this to true only once the SuperProfile product above has been confirmed
+// to email product-access/download instructions to buyers after checkout.
+export const SUPERPROFILE_EMAIL_DELIVERY_CONFIGURED = true;
 
 // ------------------------------------------------------------
 // Visitor-session launch-offer timer
@@ -39,8 +39,13 @@ export const CONTACT_LINK = "mailto:prodxstoresupport@gmail.com";
 
 export const BRAND_NAME = "PRODXSTORE";
 
-/** Rejects placeholders and anything that isn't a published Razorpay Payment Page URL. */
-export function isValidPaymentPageUrl(url: string): boolean {
+/**
+ * Rejects placeholders and anything that isn't a published SuperProfile
+ * product checkout URL. If SuperProfile provides another verified checkout
+ * domain, update the allowed-hostname check below after confirming the
+ * exact published URL — do not accept arbitrary external URLs silently.
+ */
+export function isValidSuperProfileUrl(url: string): boolean {
   const value = url.trim();
 
   if (!value || value === "#" || value.includes("PASTE_") || value.includes("YOUR_")) {
@@ -48,11 +53,11 @@ export function isValidPaymentPageUrl(url: string): boolean {
   }
 
   try {
-    const parsedUrl = new URL(value);
+    const parsed = new URL(value);
 
     return (
-      parsedUrl.protocol === "https:" &&
-      (parsedUrl.hostname.endsWith("razorpay.com") || parsedUrl.hostname.endsWith("rzp.io"))
+      parsed.protocol === "https:" &&
+      (parsed.hostname === "superprofile.bio" || parsed.hostname.endsWith(".superprofile.bio"))
     );
   } catch {
     return false;

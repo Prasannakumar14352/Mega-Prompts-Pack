@@ -26,8 +26,11 @@ import {
   TERMS_LINK,
 } from "../config";
 
-// Configure both the ₹399 and ₹1,999 Razorpay Payment Pages to redirect to:
-// https://YOUR-LIVE-DOMAIN.com/payment-success
+// This page is no longer the primary post-purchase destination: SuperProfile
+// shows its own confirmation page and sends its own delivery email after
+// checkout. It is kept temporarily as a generic support/reference page while
+// the SuperProfile purchase flow is being tested, and is not linked from the
+// main customer journey.
 
 const SUPPORT_MAILTO =
   "mailto:support@prodxstore.com?subject=Mega%20AI%20Prompt%20Vault%20Access%20Support";
@@ -73,7 +76,7 @@ export default function PaymentSuccess() {
   });
 
   // A public redirect page does not securely verify payment. Add server-side
-  // Razorpay verification before automatically unlocking protected files.
+  // verification before automatically unlocking protected files.
   const paymentReference = getSanitizedPaymentReference();
   const year = new Date().getFullYear();
 
@@ -114,8 +117,8 @@ export default function PaymentSuccess() {
             <p className="mt-2 text-lg font-semibold text-[#F5F5F7]">{PRODUCT_NAME}</p>
 
             <p className="mt-5 text-base text-[#B8B8C0] leading-relaxed">
-              Your payment has been submitted successfully through Razorpay. Product-access
-              instructions will be sent to the email address you used during checkout.
+              Your product access is provided through SuperProfile and sent to the email address
+              you used during checkout.
             </p>
             <p className="mt-3 text-sm text-[#85858E] leading-relaxed">
               Please allow a few minutes for the email to arrive, and check your Spam or
@@ -183,7 +186,7 @@ export default function PaymentSuccess() {
                 </ul>
 
                 <div className="mt-6 border-t border-[#2A2A2E] pt-5">
-                  <p className="text-sm font-medium text-[#F5F5F7]">Price: Confirmed on Razorpay</p>
+                  <p className="text-sm font-medium text-[#F5F5F7]">Price: Confirmed on SuperProfile</p>
                 </div>
               </Card>
             </Reveal>
@@ -203,12 +206,12 @@ export default function PaymentSuccess() {
                 <div>
                   <h2 className="text-base font-semibold text-white">Keep your payment receipt</h2>
                   <p className="mt-2 text-sm text-[#B8B8C0] leading-relaxed">
-                    Save the Razorpay payment confirmation and receipt until you have successfully
-                    received and downloaded your product.
+                    Save your SuperProfile payment confirmation and receipt until you have
+                    successfully received and downloaded your product.
                   </p>
                   <p className="mt-2 text-sm text-[#B8B8C0] leading-relaxed">
                     If you entered an incorrect email address during payment, contact support and
-                    include your Razorpay payment ID.
+                    include your SuperProfile order or payment reference.
                   </p>
                 </div>
               </div>
@@ -228,7 +231,7 @@ export default function PaymentSuccess() {
               </h2>
               <p className="mt-3 text-sm text-[#B8B8C0] leading-relaxed">
                 Contact our support team and include the email address used during checkout and
-                your Razorpay payment ID.
+                your SuperProfile order or payment reference.
               </p>
 
               <a
