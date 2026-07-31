@@ -5,7 +5,7 @@
 
 // Each SuperProfile product URL must use the same price displayed on this landing page.
 export const LAUNCH_SUPERPROFILE_URL: string = "https://superprofile.bio/vp/the-mega-ai-prompt-vault-—-launch-offer";
-export const REGULAR_SUPERPROFILE_URL: string = "PASTE_1999_SUPERPROFILE_PRODUCT_URL_HERE";
+export const REGULAR_SUPERPROFILE_URL: string = "https://superprofile.bio/vp/the-mega-ai-prompt-vault-—-regular-access";
 
 export const LAUNCH_PRICE = "₹399";
 export const PREVIOUS_PRICE = "₹1,999";
