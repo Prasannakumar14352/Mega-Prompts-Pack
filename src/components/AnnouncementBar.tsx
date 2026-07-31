@@ -14,7 +14,7 @@ export default function AnnouncementBar() {
               Launch offer ended
             </span>
             <span className="font-medium">
-              The Mega AI Prompt Vault is still available for {PREVIOUS_PRICE}
+              The Mega AI Prompt Vault is available for {PREVIOUS_PRICE}
             </span>
           </>
         ) : (
@@ -23,7 +23,7 @@ export default function AnnouncementBar() {
               2-Hour Launch Offer
             </span>
             <span className="font-medium">
-              Get lifetime access for{" "}
+              Lifetime access for{" "}
               <span className="font-bold">{LAUNCH_PRICE}</span>{" "}
               <span className="text-[#090909]/60 line-through">{PREVIOUS_PRICE}</span>
             </span>

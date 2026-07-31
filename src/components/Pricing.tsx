@@ -1,19 +1,20 @@
 import { ArrowRight, ShieldCheck } from "lucide-react";
 import Reveal from "./Reveal";
 import Badge from "./ui/Badge";
-import Button from "./ui/Button";
+import LinkButton from "./ui/LinkButton";
 import OfferCountdown from "./OfferCountdown";
 import { OrangeGlow } from "./ui/Decor";
 import { useOfferCountdown } from "../hooks/useOfferCountdown";
 import {
-  LAUNCH_BUY_LINK,
+  LAUNCH_PAYMENT_PAGE_URL,
   LAUNCH_PRICE,
+  PAYMENT_PAGE_REDIRECT_CONFIGURED,
   PROMPT_COUNT,
-  REGULAR_BUY_LINK,
+  REGULAR_PAYMENT_PAGE_URL,
   REGULAR_PRICE,
   SUPPORT_EMAIL,
   TOTAL_VALUE,
-  isValidCheckoutLink,
+  isValidPaymentPageUrl,
 } from "../config";
 
 const VALUE_ITEMS = [
@@ -37,14 +38,9 @@ export default function Pricing() {
   const { isExpired } = useOfferCountdown();
 
   const activePrice = isExpired ? REGULAR_PRICE : LAUNCH_PRICE;
-  const activeBuyLink = isExpired ? REGULAR_BUY_LINK : LAUNCH_BUY_LINK;
+  const activePaymentPageUrl = isExpired ? REGULAR_PAYMENT_PAGE_URL : LAUNCH_PAYMENT_PAGE_URL;
   const activeButtonText = isExpired ? `Get Access for ${REGULAR_PRICE}` : `Get Instant Access for ${LAUNCH_PRICE}`;
-  const linkReady = isValidCheckoutLink(activeBuyLink);
-
-  const handlePurchase = () => {
-    if (!linkReady) return;
-    window.location.href = activeBuyLink;
-  };
+  const linkReady = isValidPaymentPageUrl(activePaymentPageUrl);
 
   return (
     <section id="pricing" className="relative overflow-hidden py-16 sm:py-24 bg-[#0D0D0F]">
@@ -95,7 +91,8 @@ export default function Pricing() {
                     Your 2-hour launch offer has ended.
                   </p>
                   <p className="mt-2 text-xs text-[#85858E]">
-                    You can still purchase the complete Mega AI Prompt Vault with lifetime access.
+                    The introductory offer has ended, but you can still purchase the complete Mega
+                    AI Prompt Vault with lifetime access.
                   </p>
                 </>
               ) : (
@@ -112,38 +109,37 @@ export default function Pricing() {
               )}
             </div>
 
-            {linkReady ? (
-              <Button
-                onClick={handlePurchase}
-                aria-label={`${activeButtonText} — proceed to secure checkout`}
-                className="mt-6 w-full"
-              >
-                {activeButtonText}
-                <ArrowRight size={18} aria-hidden="true" />
-              </Button>
-            ) : (
-              <>
-                <Button disabled aria-disabled="true" className="mt-6 w-full">
-                  {activeButtonText}
-                </Button>
-                <p className="mt-3 text-center text-xs text-[#F59E0B]">
-                  Regular-price checkout is temporarily unavailable.
-                </p>
-                <p className="mt-1 text-center text-xs text-[#85858E]">
-                  Email{" "}
-                  <a
-                    href={`mailto:${SUPPORT_EMAIL}`}
-                    className="font-medium text-[#FF6A00] hover:underline"
-                  >
-                    {SUPPORT_EMAIL}
-                  </a>{" "}
-                  for access.
-                </p>
-              </>
+            <LinkButton
+              href={activePaymentPageUrl}
+              disabled={!linkReady}
+              aria-label={`Purchase The Mega AI Prompt Vault for ${activePrice}`}
+              className="mt-6 w-full"
+            >
+              {activeButtonText}
+              <ArrowRight size={18} aria-hidden="true" />
+            </LinkButton>
+
+            {!linkReady && (
+              <p className="mt-3 text-center text-xs text-[#F59E0B]">
+                Checkout is temporarily unavailable. Please contact{" "}
+                <a
+                  href={`mailto:${SUPPORT_EMAIL}`}
+                  className="font-medium text-[#FF6A00] hover:underline"
+                >
+                  {SUPPORT_EMAIL}
+                </a>
+                .
+              </p>
             )}
 
             <p className="mt-3 text-center text-xs text-[#85858E]">
               Instant download • Secure payment • 7-day money-back guarantee
+            </p>
+
+            <p className="mt-2 text-center text-xs text-[#85858E]">
+              {PAYMENT_PAGE_REDIRECT_CONFIGURED
+                ? "After successful payment, you will be redirected to the product access page and receive your access details by email."
+                : "Payment is completed securely on Razorpay. Product access instructions will be shown after payment."}
             </p>
 
             <div className="mt-6 flex flex-wrap justify-center gap-2">
