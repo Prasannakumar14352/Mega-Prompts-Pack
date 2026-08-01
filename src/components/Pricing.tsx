@@ -76,7 +76,7 @@ export default function Pricing() {
               <p className="mt-1 font-heading text-6xl font-extrabold text-[#FF6A00]">
                 {PRODUCT_PRICE}
               </p>
-              <p className="mt-1.5 text-sm text-[#85858E] line-through">{COMPARE_AT_PRICE}</p>
+              
               <p className="mt-2 text-sm text-[#B8B8C0]">One-time payment. No subscription.</p>
             </div>
 
