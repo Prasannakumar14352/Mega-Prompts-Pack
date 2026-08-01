@@ -8,7 +8,7 @@ interface OfferCountdownProps {
   variant?: Variant;
   className?: string;
   showIcon?: boolean;
-  /** Rendered once this visitor's launch offer has expired. */
+  /** Rendered once the current promotional session has ended. */
   expiredFallback?: ReactNode;
 }
 
@@ -30,7 +30,9 @@ export default function OfferCountdown({
     return (
       <div className={className} role="status" aria-live="polite">
         {expiredFallback ?? (
-          <p className="text-sm font-semibold text-[#B8B8C0]">Your launch offer has ended.</p>
+          <p className="text-sm font-semibold text-[#B8B8C0]">
+            This promotional session has ended.
+          </p>
         )}
       </div>
     );
@@ -39,7 +41,7 @@ export default function OfferCountdown({
   const accessibleLabel = `${unit(hours, "hour")}, ${unit(minutes, "minute")} and ${unit(
     seconds,
     "second"
-  )} remaining in your launch offer.`;
+  )} remaining in the current promotional session.`;
 
   return (
     <div

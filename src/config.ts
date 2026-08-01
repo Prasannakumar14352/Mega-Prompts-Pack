@@ -3,14 +3,12 @@
 // Update these values before publishing the page live.
 // ============================================================
 
-// Each SuperProfile product URL must use the same price displayed on this landing page.
-export const LAUNCH_SUPERPROFILE_URL: string = "https://superprofile.bio/vp/the-mega-ai-prompt-vault-—-launch-offer";
-export const REGULAR_SUPERPROFILE_URL: string = "https://superprofile.bio/vp/the-mega-ai-prompt-vault-—-regular-access";
+// This SuperProfile product must be configured with a fixed one-time price of ₹399.
+export const SUPERPROFILE_PRODUCT_URL: string =
+  "https://superprofile.bio/vp/the-mega-ai-prompt-vault-—-launch-offer";
 
-export const LAUNCH_PRICE = "₹399";
-export const PREVIOUS_PRICE = "₹1,999";
-// Regular (post-launch) price — same value as PREVIOUS_PRICE, kept as one source of truth.
-export const REGULAR_PRICE = PREVIOUS_PRICE;
+export const PRODUCT_PRICE = "₹399";
+export const COMPARE_AT_PRICE = "₹1,999";
 export const TOTAL_VALUE = "₹4,499";
 export const SUPPORT_EMAIL = "Prodxstoresupport@gmail.com";
 export const PRODUCT_NAME = "The Mega AI Prompt Vault";
@@ -22,14 +20,14 @@ export const GUARANTEE_DAYS = 7;
 export const SUPERPROFILE_EMAIL_DELIVERY_CONFIGURED = true;
 
 // ------------------------------------------------------------
-// Visitor-session launch-offer timer
+// Promotional session timer
 // ------------------------------------------------------------
-// Each visitor gets their own 2-hour countdown starting the first time they
-// open this website in their browser. It is stored in localStorage so it
-// survives refreshes and reopened tabs, but it is specific to that visitor —
-// it is not a single global deadline shared by every visitor.
+// This countdown exists only in page memory for the current page load. It is
+// never written to localStorage, sessionStorage, a cookie or a database, so
+// refreshing the page, reopening it, or opening it in a new tab always starts
+// a fresh 2-hour promotional session. The price never changes when a session
+// ends — it stays ₹399.
 export const OFFER_DURATION_MS = 2 * 60 * 60 * 1000;
-export const OFFER_STORAGE_KEY = "prodxstore_launch_offer_expiry";
 
 // Replace # with published legal-policy URLs before running paid advertisements.
 export const TERMS_LINK = "#";

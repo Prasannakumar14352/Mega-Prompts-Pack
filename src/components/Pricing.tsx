@@ -6,12 +6,11 @@ import OfferCountdown from "./OfferCountdown";
 import { OrangeGlow } from "./ui/Decor";
 import { useOfferCountdown } from "../hooks/useOfferCountdown";
 import {
-  LAUNCH_SUPERPROFILE_URL,
-  LAUNCH_PRICE,
-  SUPERPROFILE_EMAIL_DELIVERY_CONFIGURED,
+  COMPARE_AT_PRICE,
+  PRODUCT_PRICE,
   PROMPT_COUNT,
-  REGULAR_SUPERPROFILE_URL,
-  REGULAR_PRICE,
+  SUPERPROFILE_EMAIL_DELIVERY_CONFIGURED,
+  SUPERPROFILE_PRODUCT_URL,
   SUPPORT_EMAIL,
   TOTAL_VALUE,
   isValidSuperProfileUrl,
@@ -34,13 +33,11 @@ const INCLUDED_CHIPS = [
   "Commercial use",
 ];
 
+const BUTTON_TEXT = `Get Instant Access for ${PRODUCT_PRICE}`;
+
 export default function Pricing() {
   const { isExpired } = useOfferCountdown();
-
-  const activePrice = isExpired ? REGULAR_PRICE : LAUNCH_PRICE;
-  const activeCheckoutUrl = isExpired ? REGULAR_SUPERPROFILE_URL : LAUNCH_SUPERPROFILE_URL;
-  const activeButtonText = isExpired ? `Get Access for ${REGULAR_PRICE}` : `Get Instant Access for ${LAUNCH_PRICE}`;
-  const linkReady = isValidSuperProfileUrl(activeCheckoutUrl);
+  const linkReady = isValidSuperProfileUrl(SUPERPROFILE_PRODUCT_URL);
 
   return (
     <section id="pricing" className="relative overflow-hidden py-16 sm:py-24 bg-[#0D0D0F]">
@@ -50,7 +47,7 @@ export default function Pricing() {
         <Reveal className="mx-auto max-w-xl rounded-3xl bg-[linear-gradient(135deg,#FF6A00_0%,#FF7A1A_50%,#D94F00_100%)] p-[1.5px] shadow-[0_30px_90px_rgba(255,106,0,0.22)]">
           <div className="rounded-3xl bg-[#070707] p-6 sm:p-10">
             <div className="flex justify-center">
-              <Badge>{isExpired ? "Regular Access" : "2-Hour Launch Offer"}</Badge>
+              <Badge>Limited Offer</Badge>
             </div>
 
             <h2 className="mt-5 text-center font-heading text-2xl sm:text-3xl font-bold text-white">
@@ -75,47 +72,37 @@ export default function Pricing() {
               <p className="text-sm text-[#B8B8C0]">Total value</p>
               <p className="text-xl font-semibold text-[#85858E] line-through">{TOTAL_VALUE}</p>
 
-              <p className="mt-4 text-sm font-medium text-[#FF6A00]">
-                {isExpired ? "Regular price" : "Launch price"}
-              </p>
+              <p className="mt-4 text-sm font-medium text-[#FF6A00]">Offer price</p>
               <p className="mt-1 font-heading text-6xl font-extrabold text-[#FF6A00]">
-                {activePrice}
+                {PRODUCT_PRICE}
               </p>
+              <p className="mt-1.5 text-sm text-[#85858E] line-through">{COMPARE_AT_PRICE}</p>
               <p className="mt-2 text-sm text-[#B8B8C0]">One-time payment. No subscription.</p>
             </div>
 
             <div className="mt-8 text-center">
               {isExpired ? (
-                <>
-                  <p className="text-sm font-semibold text-[#B8B8C0]">
-                    Your 2-hour launch offer has ended.
-                  </p>
-                  <p className="mt-2 text-xs text-[#85858E]">
-                    The introductory offer has ended, but you can still purchase the complete Mega
-                    AI Prompt Vault with lifetime access.
-                  </p>
-                </>
+                <p className="text-sm font-semibold text-[#B8B8C0]">
+                  This promotional session has ended. Access is still available for{" "}
+                  {PRODUCT_PRICE}.
+                </p>
               ) : (
                 <>
                   <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#85858E]">
-                    Your {LAUNCH_PRICE} launch offer ends in
+                    Current promotional session ends in
                   </p>
                   <OfferCountdown className="justify-center" />
-                  <p className="mt-3 text-xs text-[#85858E]">
-                    Complete your purchase before the countdown reaches zero to lock in the launch
-                    price.
-                  </p>
                 </>
               )}
             </div>
 
             <LinkButton
-              href={activeCheckoutUrl}
+              href={SUPERPROFILE_PRODUCT_URL}
               disabled={!linkReady}
-              aria-label={`Purchase The Mega AI Prompt Vault for ${activePrice}`}
+              aria-label={`Purchase The Mega AI Prompt Vault for ${PRODUCT_PRICE}`}
               className="mt-6 w-full"
             >
-              {activeButtonText}
+              {BUTTON_TEXT}
               <ArrowRight size={18} aria-hidden="true" />
             </LinkButton>
 

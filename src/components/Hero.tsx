@@ -1,5 +1,5 @@
 import { ArrowRight, FileSpreadsheet, ShieldCheck } from "lucide-react";
-import { LAUNCH_PRICE, PREVIOUS_PRICE, PROMPT_COUNT } from "../config";
+import { PRODUCT_PRICE, PROMPT_COUNT } from "../config";
 import { scrollToId } from "../utils/scroll";
 import Badge from "./ui/Badge";
 import Button from "./ui/Button";
@@ -65,14 +65,17 @@ export default function Hero() {
           <div className="mt-6">
             {isExpired ? (
               <p className="text-sm font-semibold text-[#B8B8C0]">
-                The launch offer has ended. Get lifetime access for {PREVIOUS_PRICE}.
+                Get complete lifetime access for {PRODUCT_PRICE}.
               </p>
             ) : (
               <>
                 <p className="mb-2.5 text-xs font-semibold uppercase tracking-widest text-[#85858E]">
-                  Your {LAUNCH_PRICE} launch price ends in
+                  Your promotional session ends in
                 </p>
                 <OfferCountdown showIcon />
+                <p className="mt-2.5 text-xs text-[#85858E]">
+                  Get complete lifetime access for {PRODUCT_PRICE}.
+                </p>
               </>
             )}
           </div>
