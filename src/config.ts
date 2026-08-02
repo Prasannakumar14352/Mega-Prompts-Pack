@@ -77,11 +77,17 @@ export const BUYER_COUNT = "1,200+ creators";
 // Replace with the real WhatsApp support number (with country code, no + or spaces), e.g. "919876543210".
 export const WHATSAPP_NUMBER = "+919440157573";
 
-// Replace # with published legal-policy URLs before running paid advertisements.
-export const TERMS_LINK = "#";
-export const PRIVACY_LINK = "#";
-export const REFUND_LINK = "#";
+// These point to the in-app legal pages (src/pages/Terms.tsx etc). Their
+// content is a starter draft, not legal advice — review before relying on it.
+export const TERMS_LINK = "/terms";
+export const PRIVACY_LINK = "/privacy";
+export const REFUND_LINK = "/refund-policy";
 export const CONTACT_LINK = "mailto:prodxstoresupport@gmail.com";
+
+// Set to true once the legal pages/content have been reviewed and are ready
+// to link from the main footer. Flip this back on with one line — the
+// footer's Legal column markup stays intact, it's just conditionally shown.
+export const SHOW_LEGAL = false;
 
 export const BRAND_NAME = "PRODXSTORE";
 

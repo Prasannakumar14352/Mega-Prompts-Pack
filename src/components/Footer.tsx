@@ -6,6 +6,7 @@ import {
   CONTACT_LINK,
   PRIVACY_LINK,
   REFUND_LINK,
+  SHOW_LEGAL,
   SUPPORT_EMAIL,
   TERMS_LINK,
 } from "../config";
@@ -39,7 +40,11 @@ export default function Footer() {
       />
 
       <div className="relative mx-auto max-w-[1280px] px-4 sm:px-6 py-12 sm:py-16">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+        <div
+          className={`grid grid-cols-1 gap-10 sm:grid-cols-2 lg:gap-8 ${
+            SHOW_LEGAL ? "lg:grid-cols-4" : "lg:grid-cols-3"
+          }`}
+        >
           <div className="sm:col-span-2 lg:col-span-1">
             <Logo className="w-[175px] sm:w-[210px] lg:w-[230px]" />
             <p className="mt-4 max-w-xs text-sm text-[#B8B8C0] leading-relaxed">
@@ -72,25 +77,27 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-widest text-white">Legal</h3>
-            <ul className="mt-4 space-y-3">
-              <li>
-                <LegalLink href={TERMS_LINK} label="Terms and Conditions" className={LINK_CLASS} />
-              </li>
-              <li>
-                <LegalLink href={PRIVACY_LINK} label="Privacy Policy" className={LINK_CLASS} />
-              </li>
-              <li>
-                <LegalLink href={REFUND_LINK} label="Refund Policy" className={LINK_CLASS} />
-              </li>
-              <li>
-                <a href={CONTACT_LINK} className={LINK_CLASS}>
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </div>
+          {SHOW_LEGAL && (
+            <div>
+              <h3 className="text-sm font-semibold uppercase tracking-widest text-white">Legal</h3>
+              <ul className="mt-4 space-y-3">
+                <li>
+                  <LegalLink href={TERMS_LINK} label="Terms and Conditions" className={LINK_CLASS} />
+                </li>
+                <li>
+                  <LegalLink href={PRIVACY_LINK} label="Privacy Policy" className={LINK_CLASS} />
+                </li>
+                <li>
+                  <LegalLink href={REFUND_LINK} label="Refund Policy" className={LINK_CLASS} />
+                </li>
+                <li>
+                  <a href={CONTACT_LINK} className={LINK_CLASS}>
+                    Contact
+                  </a>
+                </li>
+              </ul>
+            </div>
+          )}
 
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-widest text-white">

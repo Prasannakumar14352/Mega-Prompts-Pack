@@ -34,7 +34,7 @@ import {
 // main customer journey.
 
 const SUPPORT_MAILTO =
-  "mailto:support@prodxstore.com?subject=Mega%20AI%20Prompt%20Vault%20Access%20Support";
+  "mailto:prodxstoresupport@gmail.com?subject=Mega%20AI%20Prompt%20Vault%20Access%20Support";
 
 const STEPS = [
   {

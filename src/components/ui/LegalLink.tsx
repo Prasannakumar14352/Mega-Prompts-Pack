@@ -1,4 +1,5 @@
 import type { MouseEvent } from "react";
+import { Link } from "react-router-dom";
 
 interface LegalLinkProps {
   href: string;
@@ -7,9 +8,11 @@ interface LegalLinkProps {
 }
 
 /**
- * Renders a legal-page link. If the href is still the unconfigured "#"
- * placeholder, clicking it is prevented (rather than jumping to the top of
- * the page) and a console warning is logged so the gap is caught before launch.
+ * Renders a legal-page link. Internal paths (starting with "/") use React
+ * Router's <Link> for client-side navigation. If the href is still the
+ * unconfigured "#" placeholder, clicking it is prevented (rather than
+ * jumping to the top of the page) and a console warning is logged so the
+ * gap is caught before launch.
  */
 export default function LegalLink({ href, label, className = "" }: LegalLinkProps) {
   const isConfigured = href.trim().length > 0 && href.trim() !== "#";
@@ -23,6 +26,14 @@ export default function LegalLink({ href, label, className = "" }: LegalLinkProp
       );
     }
   };
+
+  if (isConfigured && href.startsWith("/")) {
+    return (
+      <Link to={href} className={className}>
+        {label}
+      </Link>
+    );
+  }
 
   return (
     <a
