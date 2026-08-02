@@ -21,6 +21,7 @@ import {
   CONTACT_LINK,
   PRIVACY_LINK,
   PRODUCT_NAME,
+  PROMPT_COUNT,
   REFUND_LINK,
   SUPPORT_EMAIL,
   TERMS_LINK,
@@ -54,7 +55,7 @@ const STEPS = [
 ];
 
 const INCLUDED_ITEMS = [
-  "1,287,840+ core AI prompts",
+  `${PROMPT_COUNT} core AI prompts`,
   "Five premium bonus collections",
   "Searchable CSV files",
   "Lifetime product access",

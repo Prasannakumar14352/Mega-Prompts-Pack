@@ -4,6 +4,7 @@ import Button from "./ui/Button";
 import Logo from "./Logo";
 import { GridOverlay, OrangeGlow } from "./ui/Decor";
 import OfferCountdown from "./OfferCountdown";
+import PaymentMethods from "./PaymentMethods";
 import { useOfferCountdown } from "../hooks/useOfferCountdown";
 import { scrollToId } from "../utils/scroll";
 import { PRODUCT_PRICE, PROMPT_COUNT } from "../config";
@@ -53,6 +54,8 @@ export default function FinalCTA() {
             Get Instant Access
             <ArrowRight size={18} aria-hidden="true" />
           </Button>
+
+          <PaymentMethods className="mt-5" />
 
           <p className="mt-5 text-sm text-[#85858E]">
             Instant digital delivery • No subscription • 7-day guarantee

@@ -3,34 +3,35 @@ import Reveal from "./Reveal";
 import SectionHeading from "./ui/SectionHeading";
 import Card from "./ui/Card";
 import { OrangeGlow } from "./ui/Decor";
+import { BONUS_COUNT } from "../config";
 
 const BONUSES = [
   {
     icon: ImageIcon,
     title: "Google Imagen & Gemini Image Pack",
     description:
-      "138,240 image prompts created for a wide range of commercial, editorial and creative visual styles.",
+      "241,920 image prompts created for a wide range of commercial, editorial and creative visual styles.",
     value: "Value ₹500",
   },
   {
     icon: Wand2,
     title: "Higgsfield Soul Studio Image Pack",
     description:
-      "138,240 prompts for cinematic portraits, branded visuals, fashion concepts and creator-focused imagery.",
+      "241,920 prompts for cinematic portraits, branded visuals, fashion concepts and creator-focused imagery.",
     value: "Value ₹500",
   },
   {
     icon: Clapperboard,
     title: "AI Video Pack — Volume 1",
     description:
-      "69,120 prompts for scenes, camera movement, composition and cinematic direction across Sora, Runway and Kling.",
+      "120,960 prompts for scenes, camera movement, composition and cinematic direction across Sora, Runway and Kling.",
     value: "Value ₹400",
   },
   {
     icon: Film,
     title: "AI Video Pack — Volume 2",
     description:
-      "69,120 additional prompts for ads, storytelling, product videos, social clips and creative video concepts.",
+      "120,960 additional prompts for ads, storytelling, product videos, social clips and creative video concepts.",
     value: "Value ₹400",
   },
 ];
@@ -44,7 +45,8 @@ export default function Bonuses() {
         <SectionHeading
           title={
             <>
-              Plus 5 free bonuses worth <span className="text-[#FF6A00]">₹2,500</span>
+              Plus 5 free bonuses — <span className="text-[#FF6A00]">{BONUS_COUNT}</span> more
+              prompts
             </>
           }
           subtitle="Expand the vault with landing-page, image and video prompt collections included at no extra cost during the launch offer."

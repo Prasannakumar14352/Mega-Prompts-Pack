@@ -2,13 +2,23 @@ import { useState } from "react";
 import { Plus } from "lucide-react";
 import Reveal from "./Reveal";
 import SectionHeading from "./ui/SectionHeading";
-import { SUPPORT_EMAIL } from "../config";
+import { PROMPT_COUNT, SUPPORT_EMAIL } from "../config";
 
 const FAQS = [
   {
-    question: "How do I receive the product?",
+    question: "How do I pay?",
     answer:
-      "Immediately after payment, you are taken to a thank-you page containing your download link. The same access link is also sent to the email address used during checkout. Save the email so you can return to your files later.",
+      "Checkout supports UPI, Google Pay, PhonePe, credit cards and debit cards (Visa, Mastercard and more) through our secure payment partner. Choose whichever method you're most comfortable with at checkout.",
+  },
+  {
+    question: "How is it delivered?",
+    answer:
+      "It's an instant digital download — there's nothing physical to ship. As soon as payment is confirmed, your access instructions are shown on the confirmation page and sent to the email address you used at checkout.",
+  },
+  {
+    question: "Do I get lifetime access & updates?",
+    answer:
+      "Yes. This is a one-time payment with lifetime access to the version you receive, plus free monthly updates as new prompt collections are added.",
   },
   {
     question: "Which AI tools do the prompts work with?",
@@ -26,9 +36,9 @@ const FAQS = [
       "Yes. You may customize and use the prompts for your own projects and client work. You may not resell, redistribute, share or upload the original prompt files as a competing prompt bundle. You are also responsible for following the terms and commercial-use policies of the AI platform used to generate the final output.",
   },
   {
-    question: "Do I really receive more than 1.2 million prompts?",
+    question: `Do I really receive more than ${PROMPT_COUNT} prompts?`,
     answer:
-      "Yes. The core category collections listed on this page contain a combined total of 1,287,840 prompts. The five bonus packs are included separately. Files are grouped by topic and AI model so you can search and use them more efficiently.",
+      `Yes, ${PROMPT_COUNT} distinct prompts and variations across every collection and bonus pack. Honestly: many of these are tool-specific versions and niche/audience variations built from the same proven templates, not every single one hand-written from scratch. If you open a CSV you'll see that structure clearly — it's still a large, genuinely useful and well-organized library, and we'd rather describe it accurately than round up.`,
   },
   {
     question: "What is the refund policy?",

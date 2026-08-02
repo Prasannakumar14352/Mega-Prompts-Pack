@@ -5,6 +5,8 @@ import Badge from "./ui/Badge";
 import Button from "./ui/Button";
 import { GridOverlay, OrangeGlow } from "./ui/Decor";
 import OfferCountdown from "./OfferCountdown";
+import TrustBar from "./TrustBar";
+import PaymentMethods from "./PaymentMethods";
 import { useOfferCountdown } from "../hooks/useOfferCountdown";
 
 const FILE_CARDS = [
@@ -33,13 +35,15 @@ export default function Hero() {
             <span className="bg-gradient-to-r from-[#FF6A00] via-[#FF9A4D] to-white bg-clip-text text-transparent">
               {PROMPT_COUNT}
             </span>{" "}
-            prompts. Better AI results in less time.
+            distinct prompts & variations. Better AI results in less time.
           </h1>
 
           <p className="mt-6 max-w-xl text-base sm:text-lg text-[#B8B8C0]">
             Copy proven prompts for writing, marketing, images, video, coding and business—without
             spending hours learning prompt engineering.
           </p>
+
+          <TrustBar className="mt-5" />
 
           <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-4">
             <Button onClick={() => scrollToId("pricing")} fullWidthOnMobile className="group relative overflow-hidden">
@@ -56,6 +60,8 @@ export default function Hero() {
               One payment. Instant download. Lifetime access.
             </p>
           </div>
+
+          <PaymentMethods className="mt-4 justify-start" />
 
           <div className="mt-6 flex flex-wrap items-center gap-2 text-xs sm:text-sm text-[#B8B8C0]">
             <ShieldCheck size={16} className="text-[#FF6A00]" aria-hidden="true" />
@@ -80,7 +86,6 @@ export default function Hero() {
             )}
           </div>
 
-          {/* Add verified customer count and rating here only after genuine purchase and review data is available. */}
           <p className="mt-8 text-sm font-medium text-[#85858E] border-t border-[#2A2A2E] pt-6">
             Built for ChatGPT, Claude, Gemini, Midjourney, Sora and more.
           </p>

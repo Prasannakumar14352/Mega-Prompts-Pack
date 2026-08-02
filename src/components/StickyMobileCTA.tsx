@@ -49,10 +49,10 @@ export default function StickyMobileCTA() {
         </div>
         <Button
           onClick={() => scrollToId("pricing")}
-          className="!px-6 !py-3 shrink-0"
-          aria-label="Scroll to pricing to get access"
+          className="!px-5 !py-3 shrink-0 whitespace-nowrap"
+          aria-label={`Get Instant Access for ${PRODUCT_PRICE} — scroll to pricing`}
         >
-          Get Access
+          Get Instant Access — {PRODUCT_PRICE}
         </Button>
       </div>
     </div>
