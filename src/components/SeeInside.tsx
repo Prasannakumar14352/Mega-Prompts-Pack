@@ -1,4 +1,4 @@
-import { ImageIcon, PlayCircle } from "lucide-react";
+import { ImageIcon } from "lucide-react";
 import Reveal from "./Reveal";
 import SectionHeading from "./ui/SectionHeading";
 import { OrangeGlow } from "./ui/Decor";
