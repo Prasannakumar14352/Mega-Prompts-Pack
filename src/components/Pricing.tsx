@@ -5,22 +5,27 @@ import LinkButton from "./ui/LinkButton";
 import OfferCountdown from "./OfferCountdown";
 import TrustBar from "./TrustBar";
 import PaymentMethods from "./PaymentMethods";
+import CTAAssurance from "./CTAAssurance";
 import { OrangeGlow } from "./ui/Decor";
 import { useOfferCountdown } from "../hooks/useOfferCountdown";
 import {
   COMPARE_AT_PRICE,
   PRODUCT_PRICE,
+  PROMPT_COUNT,
   SUPERPROFILE_EMAIL_DELIVERY_CONFIGURED,
   SUPERPROFILE_PRODUCT_URL,
   SUPPORT_EMAIL,
-  VALUE_STACK,
-  formatINR,
   isValidSuperProfileUrl,
 } from "../config";
 
-const TOTAL_VALUE = VALUE_STACK.reduce((sum, item) => sum + item.price, 0);
-
 const BUTTON_TEXT = `Get Instant Access for ${PRODUCT_PRICE}`;
+
+const WHATS_INCLUDED = [
+  `The Mega AI Prompt Vault — ${PROMPT_COUNT} organized prompts`,
+  "5 bonus prompt packs (image, video & landing-page prompts)",
+  "Lifetime access, no subscription",
+  "Instant CSV download after payment",
+];
 
 export default function Pricing() {
   const { isExpired } = useOfferCountdown();
@@ -45,45 +50,20 @@ export default function Pricing() {
               Get the complete Mega AI Prompt Vault
             </h2>
 
-            <div className="mt-8">
-              <p className="text-center text-xs font-semibold uppercase tracking-widest text-[#85858E]">
-                Everything you get — total value if bought separately
-              </p>
-
-              <div className="mt-4 space-y-2.5">
-                {VALUE_STACK.map((item) => (
-                  <div key={item.label} className="flex items-baseline justify-between gap-4 text-sm">
-                    <span className="flex items-start gap-2.5 text-[#B8B8C0]">
-                      <CheckCircle2
-                        size={16}
-                        className="mt-0.5 shrink-0 text-[#FF6A00]"
-                        aria-hidden="true"
-                      />
-                      {item.label}
-                    </span>
-                    <span className="shrink-0 font-medium text-white">{formatINR(item.price)}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-4 flex items-center justify-between border-t border-[#2A2A2E] pt-3 text-sm">
-                <span className="text-[#85858E]">Total value</span>
-                <span className="font-semibold text-[#85858E] line-through">
-                  {formatINR(TOTAL_VALUE)}
-                </span>
-              </div>
+            <div className="mt-8 space-y-2.5">
+              {WHATS_INCLUDED.map((item) => (
+                <div key={item} className="flex items-start gap-2.5 text-sm text-[#B8B8C0]">
+                  <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-[#FF6A00]" aria-hidden="true" />
+                  {item}
+                </div>
+              ))}
             </div>
-
-            <p className="mt-4 text-center text-xs text-[#85858E]">
-              Searchable CSV files • Lifetime access, no subscription • Personal and commercial use
-            </p>
 
             <div className="my-6 h-px bg-[#2A2A2E]" />
 
             <div className="text-center">
-              <p className="text-sm text-[#85858E] line-through">{COMPARE_AT_PRICE}</p>
-              <p className="mt-1 text-sm font-medium text-[#FF6A00]">Launch price</p>
-              <p className="mt-1 font-heading text-6xl font-extrabold text-[#FF6A00]">
+              <p className="text-lg text-[#85858E] line-through">{COMPARE_AT_PRICE}</p>
+              <p className="mt-2 font-heading text-6xl font-extrabold text-[#FF6A00]">
                 {PRODUCT_PRICE}
               </p>
               <p className="mt-2 text-sm text-[#B8B8C0]">One-time payment. No subscription.</p>
@@ -127,6 +107,8 @@ export default function Pricing() {
                 .
               </p>
             )}
+
+            <CTAAssurance className="mt-5" />
 
             <PaymentMethods className="mt-4" />
 

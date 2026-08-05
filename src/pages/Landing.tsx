@@ -1,6 +1,7 @@
 import AnnouncementBar from "../components/AnnouncementBar";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
+import SeeInside from "../components/SeeInside";
 import PromptGallery from "../components/PromptGallery";
 import ModelMarquee from "../components/ModelMarquee";
 import Problem from "../components/Problem";
@@ -40,6 +41,7 @@ export default function Landing() {
 
       <main id="main-content" className="pb-20 md:pb-0">
         <Hero />
+        <SeeInside />
         <PromptGallery />
         <ModelMarquee />
         <Problem />

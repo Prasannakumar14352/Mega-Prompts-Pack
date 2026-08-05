@@ -7,15 +7,14 @@
 export const SUPERPROFILE_PRODUCT_URL: string =
   "https://superprofile.bio/vp/the-mega-ai-prompt-vault-—-launch-offer";
 
-// Numeric prices (₹, no formatting) — the single source of truth for both
-// the display strings below and the value-stack math in Pricing.tsx.
+// Numeric prices (₹, no formatting) — the single source of truth for the
+// display strings below.
 export const LAUNCH_PRICE = 399;
-export const REGULAR_PRICE = 999;
+export const REGULAR_PRICE = 4499;
 
 export const PRODUCT_PRICE = `₹${LAUNCH_PRICE}`;
-// A believable anchor price for a ₹399 launch offer — avoid inflated
-// "total value" stacking, which reads as untrustworthy to price-sensitive buyers.
-export const COMPARE_AT_PRICE = `₹${REGULAR_PRICE}`;
+// The anchor/original price shown struck through next to the launch price.
+export const COMPARE_AT_PRICE = `₹${REGULAR_PRICE.toLocaleString("en-IN")}`;
 export const SUPPORT_EMAIL = "Prodxstoresupport@gmail.com";
 export const PRODUCT_NAME = "The Mega AI Prompt Vault";
 
@@ -23,22 +22,6 @@ export const PRODUCT_NAME = "The Mega AI Prompt Vault";
 export function formatINR(amount: number): string {
   return `₹${amount.toLocaleString("en-IN")}`;
 }
-
-export interface ValueStackItem {
-  label: string;
-  price: number;
-}
-
-// The pricing box's "Everything you get" breakdown. Edit items/prices here —
-// the displayed total is always computed from this array, never hardcoded.
-export const VALUE_STACK: ValueStackItem[] = [
-  { label: "Mega AI Prompt Vault (2.8M+ prompts)", price: 799 },
-  { label: "Bonus 1 — Instant Landing Page Builder", price: 399 },
-  { label: "Bonus 2 — Google Imagen & Gemini Pack", price: 299 },
-  { label: "Bonus 3 — Higgsfield Soul Studio Pack", price: 299 },
-  { label: "Bonus 4 — AI Video Pack Vol. 1", price: 349 },
-  { label: "Bonus 5 — AI Video Pack Vol. 2", price: 349 },
-];
 
 // ------------------------------------------------------------
 // Prompt count — single source of truth

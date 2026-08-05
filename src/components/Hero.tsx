@@ -1,5 +1,5 @@
-import { ArrowRight, FileSpreadsheet, ShieldCheck } from "lucide-react";
-import { PRODUCT_PRICE, PROMPT_COUNT } from "../config";
+import { ArrowRight, FileSpreadsheet } from "lucide-react";
+import { PRODUCT_PRICE } from "../config";
 import { scrollToId } from "../utils/scroll";
 import Badge from "./ui/Badge";
 import Button from "./ui/Button";
@@ -7,6 +7,7 @@ import { GridOverlay, OrangeGlow } from "./ui/Decor";
 import OfferCountdown from "./OfferCountdown";
 import TrustBar from "./TrustBar";
 import PaymentMethods from "./PaymentMethods";
+import CTAAssurance from "./CTAAssurance";
 import { useOfferCountdown } from "../hooks/useOfferCountdown";
 
 const FILE_CARDS = [
@@ -32,15 +33,15 @@ export default function Hero() {
           <Badge>The Complete AI Prompt Library</Badge>
 
           <h1 className="mt-5 font-heading text-4xl sm:text-5xl lg:text-[3.4rem] font-extrabold leading-[1.02] tracking-[-0.035em] text-white">
-            <span className="bg-gradient-to-r from-[#FF6A00] via-[#FF9A4D] to-white bg-clip-text text-transparent">
-              {PROMPT_COUNT}
-            </span>{" "}
-            distinct prompts & variations. Better AI results in less time.
+            Stop rewriting the same AI prompts every day
           </h1>
 
-          <p className="mt-6 max-w-xl text-base sm:text-lg text-[#B8B8C0]">
-            Copy proven prompts for writing, marketing, images, video, coding and business—without
-            spending hours learning prompt engineering.
+          <p className="mt-5 max-w-xl text-base sm:text-lg text-[#B8B8C0]">
+            Get pro-level AI content in seconds — for ChatGPT, Claude, Gemini, Midjourney and more.
+          </p>
+
+          <p className="mt-3 max-w-xl text-sm font-medium text-[#FF6A00]">
+           2,889,564+ ready-to-use prompts, organized and instant.
           </p>
 
           <TrustBar className="mt-5" />
@@ -61,12 +62,9 @@ export default function Hero() {
             </p>
           </div>
 
-          <PaymentMethods className="mt-4 justify-start" />
+          <CTAAssurance align="left" className="mt-4" />
 
-          <div className="mt-6 flex flex-wrap items-center gap-2 text-xs sm:text-sm text-[#B8B8C0]">
-            <ShieldCheck size={16} className="text-[#FF6A00]" aria-hidden="true" />
-            <span>Instant digital delivery • Secure checkout • 7-day money-back guarantee</span>
-          </div>
+          <PaymentMethods className="mt-4 justify-start" />
 
           <div className="mt-6">
             {isExpired ? (

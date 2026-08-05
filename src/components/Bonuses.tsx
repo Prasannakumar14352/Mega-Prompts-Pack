@@ -11,28 +11,28 @@ const BONUSES = [
     title: "Google Imagen & Gemini Image Pack",
     description:
       "241,920 image prompts created for a wide range of commercial, editorial and creative visual styles.",
-    value: "Value ₹500",
+    value: "Included free",
   },
   {
     icon: Wand2,
     title: "Higgsfield Soul Studio Image Pack",
     description:
       "241,920 prompts for cinematic portraits, branded visuals, fashion concepts and creator-focused imagery.",
-    value: "Value ₹500",
+    value: "Included free",
   },
   {
     icon: Clapperboard,
     title: "AI Video Pack — Volume 1",
     description:
       "120,960 prompts for scenes, camera movement, composition and cinematic direction across Sora, Runway and Kling.",
-    value: "Value ₹400",
+    value: "Included free",
   },
   {
     icon: Film,
     title: "AI Video Pack — Volume 2",
     description:
       "120,960 additional prompts for ads, storytelling, product videos, social clips and creative video concepts.",
-    value: "Value ₹400",
+    value: "Included free",
   },
 ];
 
@@ -78,7 +78,7 @@ export default function Bonuses() {
                   Generates page structure, copy and code foundations that can be reviewed,
                   customized and published.
                 </p>
-                <p className="mt-3 text-sm font-semibold text-[#FF6A00]">Value ₹700</p>
+                <p className="mt-3 text-sm font-semibold text-[#FF6A00]">Included free</p>
               </div>
             </div>
           </Card>
