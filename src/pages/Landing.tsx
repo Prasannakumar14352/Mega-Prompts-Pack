@@ -18,7 +18,7 @@ import FAQ from "../components/FAQ";
 import FinalCTA from "../components/FinalCTA";
 import Footer from "../components/Footer";
 import StickyMobileCTA from "../components/StickyMobileCTA";
-import WhatsAppButton from "../components/WhatsAppButton";
+// import WhatsAppButton from "../components/WhatsAppButton";
 import { usePageMeta } from "../hooks/usePageMeta";
 import { PROMPT_COUNT } from "../config";
 
