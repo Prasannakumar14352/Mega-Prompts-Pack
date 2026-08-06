@@ -60,7 +60,7 @@ export default function Landing() {
 
       <Footer />
       <StickyMobileCTA />
-      <WhatsAppButton />
+      {/* <WhatsAppButton /> */}
     </div>
   );
 }
